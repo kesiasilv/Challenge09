@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Challenge09App: App {
+    @State private var vm = NewsService()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(vm)
         }
     }
 }

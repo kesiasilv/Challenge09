@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var vm = CloudKitViewModel()
+    @Environment(NewsService.self) var vm
+    private var notificationService = NotificationService()
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if(vm.isFetchingNews) {
+                ProgressView()
+            }else {
+                List(vm.news){ item in
+                    Text(item.title)
+                }
+            }
         }
         .padding()
+        .onAppear {
+            notificationService.requestNotificationPermissions()
+        }
     }
 }
 

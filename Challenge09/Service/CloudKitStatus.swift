@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-enum CloudKitError: String, LocalizedError {
+enum CloudKitStatus: String {
+    case OK
     case iCloudAccountNotFound
     case iCloudAccountNotDeterminate
     case iCloudAccountRestricted
