@@ -11,6 +11,7 @@ struct News: Identifiable, Hashable {
     let id: CKRecord.ID
     var title: String
     var content: String
+    var imageURL: URL?
     var publishedAt: Date?
 }
 
@@ -24,6 +25,7 @@ extension News {
         self.id = record.recordID
         self.title = title
         self.content = content
+        self.imageURL = (record["image"] as? CKAsset)?.fileURL
         self.publishedAt = record.creationDate
     }
     
@@ -31,6 +33,9 @@ extension News {
         let record = CKRecord(recordType: "News", recordID: id)
         record["title"] = title as String
         record["content"] = content as String
+        if let imageURL {
+            record["image"] = CKAsset(fileURL: imageURL)
+        }
         return record
     }
 }
