@@ -9,7 +9,7 @@ import Foundation
 import CloudKit
 import SwiftUI
 
-class NotificationService {
+class PushSubscriptionManager {
     private let subscriptionKey = "hasSubscribedToNews"
     
     func requestNotificationPermissions() {
@@ -55,8 +55,8 @@ class NotificationService {
         
         do {
             try await CKContainer.default().publicCloudDatabase.save(subscription)
-            print("✅ Subscription criada com sucesso.")
             UserDefaults.standard.set(true, forKey: subscriptionKey)
+            print("✅ Subscription criada com sucesso.")
         } catch {
             print("❌ Erro ao se inscrever nas notificações:", error.localizedDescription)
         }

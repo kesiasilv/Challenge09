@@ -9,12 +9,22 @@ import SwiftUI
 
 @main
 struct Challenge09App: App {
-    @State private var vm = NewsService()
+    private let push = PushSubscriptionManager()
+    private let ckClient = DefaultCloudKitClient()
+    
+    @State private var vm: NewsViewModel
+
+    init() {
+        _vm = State(initialValue: NewsViewModel(repo: CloudKitNewsRepository(ck: ckClient)))
+    }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NewsListView()
                 .environment(vm)
+                .onAppear {
+                    push.requestNotificationPermissions()
+                }
         }
     }
 }
